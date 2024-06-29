@@ -1,29 +1,23 @@
 import { useState, useEffect } from "react";
 import { SpinCustom } from "components";
-import Keeping from "./keeping";
-import {
-  Layout,
-  Row,
-} from "antd";
-
+import {  Layout } from "antd";
+import TimeKepping from "./components/time-keeping";
 
 const HomePage = () => {
   const [spinning, setSpinning] = useState(false);
-  useEffect(() => {
-  }, []);
+  const [histories, setHistories] = useState();
 
- 
   return (
     <Layout className="common-layout">
       <SpinCustom spinning={spinning}>
-        <div className="common-layout--header">
-          <Row className="filler" gutter={[8, 8]}>
-          </Row>
-        </div>
+        <div className="common-layout--header"></div>
 
         <div className="common-layout--content">
-        <Keeping />
-        {/* <AllCameras/> */}
+          {!histories &&<TimeKepping 
+            setSpinning={setSpinning}
+            spinning={spinning}
+            setHistories={setHistories}
+          />}
         </div>
       </SpinCustom>
     </Layout>

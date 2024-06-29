@@ -1,80 +1,62 @@
-import { useEffect, useMemo, useCallback, useState} from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { actionGetUserProfileByToken } from "pages/login/actions"
-import { findPageByPath } from "utils/helps"
-import { useDispatch } from "react-redux"
+import { findPageByPath, isEmpty } from "utils/helps"
+import { useDispatch, useSelector } from "react-redux"
 import { AIPT_WEB_TOKEN } from "./utils/constants/config"
-import { Layout } from "antd"
-import navigatePage from "utils/helps/navigate"
-import pages from "pages"
-import Cookies from "js-cookie"
-import PageContent from "routes"
 import socketIO from "./utils/service/socketIO"
-
-import {
-  AppHeader,
-  AppSider,
-  AppFooter
-} from "./components"
+import navigatePage from "utils/helps/navigate"
+import PageContent from "routes"
+import Cookies from "js-cookie"
+import { Layout } from "antd"
+import pages from "pages"
 
 const App = () => {
+  // redux and profile user login
   const dispatch = useDispatch()
+  const userLogin = useSelector(state => state?.profile)
+  const token = Cookies.get(AIPT_WEB_TOKEN)
+  
+  // navigate
   const navigate = useNavigate();
   window.navigatePage = (name, params = {}, query = {}) => navigatePage(navigate, name, params, query)
-  const token = Cookies.get(AIPT_WEB_TOKEN)
-  const currentPath = useLocation().pathname
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth > 576)
-
-  const isPublicPage = useMemo(() => {
-    const page = findPageByPath(currentPath, pages)
-    return !page?.auth
-  }, [currentPath])
   
-  const handleCheckNavigate = useCallback(() => {
-    const paths = pages.map(page => page.path)
-    if (!paths.includes(currentPath)) {
-      window.location.href = '/'
-    }
-  }, [currentPath])
+  // check is mobile view
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth > 576)
+  
+  // get current page
+  const { pathname } = useLocation()
+  
+  const currentPage = useMemo(() => {
+    return findPageByPath(pathname, pages)
+  }, [pathname])
 
-  // check navigate
-  handleCheckNavigate()
-
-  useEffect(() => {
-    if (token) {
-      socketIO.emit('join', token)
-      actionGetUserProfileByToken(dispatch)
-    }
-    else if (!isPublicPage) {
-      window.navigatePage('login')
-    }
-  }, [token])
+  // handle resize
+  const handleResize = () => {
+    setIsMobileView(window.innerWidth > 576)
+  }
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth > 576)
-    }
-
     window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return (
-    <Layout hasSider id="app">
-      {!isPublicPage && <AppSider />}
+  // common
+  useEffect(() => {
+    if (!isEmpty(userLogin)) {
+      socketIO.emit("join", token)
+    }
+    else if (!isEmpty(token)) {
+      actionGetUserProfileByToken(dispatch)
+    }
+    else if (currentPage?.auth) {
+      window.navigatePage("login")
+    }
+  }, [userLogin])
 
-      <Layout>
-        {!isPublicPage && <AppHeader />}
-        {isMobileView ? (
-              <div style={{fontSize:"large",fontWeight:"bold",textAlign:"center",padding:"20px"}}>Hãy sử dụng trên điện thoại!</div>
-            ) : (
-              <PageContent />
-            )}
-        {!isPublicPage && <AppFooter />}
-      </Layout>
+  return (
+    <Layout id="app">
+      <PageContent userLogin={userLogin} />
     </Layout>
   )
 }

@@ -3,25 +3,31 @@ import { AIPT_WEB_TOKEN } from "utils/constants/config"
 import { actionLogin } from "./actions"
 import Cookies from "js-cookie"
 import { SpinCustom } from "components"
+import { useDispatch } from "react-redux"
+import * as actions from 'utils/constants/redux-actions'
 import {
   Form, Input, Button, Layout
 } from "antd"
 
 const LoginPage = () => {
+  const dispatch = useDispatch()
   const [spinning, setSpinning] = useState(false)
 
   const handelLogin = async (values) => {
-    // console.log(values);
     setSpinning(true)
+
     try {
       const { data, status } = await actionLogin(values)
+
       if (status === 200) {
-        Cookies.set(AIPT_WEB_TOKEN, `Bearer ${data?.token}`,{expires:7})
+        Cookies.set(AIPT_WEB_TOKEN, `Bearer ${data?.token}`, { expires: 7 })
+        dispatch({ type: actions.SET_PROFILE, payload: data?.profile })
         window.navigatePage("home")
       }
     } catch (error) {
       console.log(error)
     }
+
     setSpinning(false)
   }
 

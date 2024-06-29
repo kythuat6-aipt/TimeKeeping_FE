@@ -14,17 +14,6 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <ConfigProvider locale={VN}>
-        {/* <Routes> */}
-        {/* <Route path="/vehicle-procedure" element={<VehicleProcedure />} />
-          <Route path="/leaveprocess" element={<VehicleProcedure />} />
-          <Route
-            path="/general-purchase-procedure"
-            element={<VehicleProcedure />}
-          />
-          <Route path="/vehicle-procedure" element={<VehicleProcedure />} />
-          <Route path="/vehicle-procedure" element={<VehicleProcedure />} />
-          <Route path="/vehicle-procedure" element={<VehicleProcedure />} /> */}
-        {/* </Routes> */}
         <App />
       </ConfigProvider>
     </BrowserRouter>

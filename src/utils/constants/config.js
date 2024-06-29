@@ -21,7 +21,7 @@ export const BTN_SIZE_TABLE = "small";
 
 export const TYPE_KEEPING = {
   0: "Công tác",
-  1: "Nghỉ phép",
-  2: "Việc riêng",
+  // 1: "Nghỉ phép",
+  // 2: "Việc riêng",
 };
 

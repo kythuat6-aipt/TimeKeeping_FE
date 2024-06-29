@@ -1,5 +1,4 @@
 // imports page
-import HistoryTime from "./historyTime";
 import HomePage from "./home";
 import LoginPage from "./login";
 import {
@@ -30,18 +29,6 @@ const pages = [
     element: <HomePage />,
     icon: <IssuesCloseOutlined />,
   },
-
-  {
-    name: "historyTime",
-    path: "/historyTime",
-    auth: true,
-    label: "Lịch sử",
-    element: <HistoryTime />,
-    icon: <IssuesCloseOutlined />,
-  },
-
-
-
 ];
 
 export default pages;

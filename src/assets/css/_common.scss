@@ -2,11 +2,13 @@
 	width: 100vw;
 	height: 100vh;
 	padding: 4px;
+	background: var(--common-background) !important;
 
 	.common-layout {
 		background: var(--common-background) !important;
-		margin: 4px 0px 4px;
-		border-radius: 2px;
+		width: 576px;
+		max-width: calc(100% - 20px);
+		margin: 0 auto;
 
 		&--header {
 			height: fit-content;
@@ -18,7 +20,6 @@
 		}
 
 		&--content {
-			// padding: 0px 16px;
 			overflow-y: auto !important;
 			flex: auto;
 
@@ -34,12 +35,6 @@
 					}
 				}
 			}
-
-			.item-center {
-				justify-content: center;
-				align-items: center;
-			}
-		
 		}
 
 		&--footer {
@@ -50,7 +45,6 @@
 	.auth-page {
 		justify-content: center;
 		align-items: center;
-		margin: 0px !important;
 
 		.page-content {
 			width: 300px;
@@ -63,6 +57,7 @@
 		}
 	}
 }
+
 .style-img{
 	position: absolute;
 	top: 0;
@@ -70,9 +65,11 @@
 	width: 100%;
 	height: 100%;
 }
+
 textarea:focus {
 	outline: none;
 }
+
 .bieumau-pdf-btn {
 	background-color: #0a2946;
 	color: #fff;
@@ -221,20 +218,10 @@ textarea:focus {
 	border-color: var(--input-boder-color) !important;
 }
 
-.exit-home {
-	display: none;
-}
-
 .ant-select-selection-placeholder,
 input::placeholder {
 	opacity: 1 !important;
 	color: rgb(105, 105, 105) !important;
-}
-
-@media screen and (max-width: 1024px) {
-	.style-table {
-		width: 1024px;
-	}
 }
 
 @media screen and (max-width: 567px) {
@@ -257,36 +244,11 @@ input::placeholder {
 	}
 }
 
-@media screen and (max-width: 376px) {
-	// .exit-home{
-	// 	display: block;
-	// }
-	// .app-sider{
-	// 	display: none;
-	// }
-	.app-header {
-		&--left {
-			.table-title {
-				display: none;
-			}
-			//   .hidden-logo{
-			// 	display: block;
-			// 	width: 80%;
-			// 	padding: 12px 8px ;
-			// 	text-align: center;
-
-			// 	img {
-			// 	  height: 50px;
-			// 	}
-			// }
-		}
-	}
-}
 .checkbox-style{
 	display: flex;
-	// padding: 30px;
 	gap: 30px;
 }
+
 .process {
 	padding: 5px;
 	color: #fff;
@@ -320,6 +282,7 @@ input::placeholder {
 .icon-fa:hover {
 	cursor: pointer;
 }
+
 img {
 	max-width: 100%;
 }
@@ -430,14 +393,4 @@ img {
 
 .mb-8 {
 	margin-bottom: 8px !important;
-}
-
-// .ant-table-pagination {
-// 	display: none !important;
-// }
-
-@media print {
-	.ant-table *:not(.ant-table-pagination *) {
-		display: none !important;
-	}
 }
