@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { SpinCustom } from "components";
 import {  Layout } from "antd";
 import TimeKepping from "./components/time-keeping";
+import HistoriesTable from "./components/histories-table";
 
 const HomePage = () => {
   const [spinning, setSpinning] = useState(false);
@@ -16,6 +17,11 @@ const HomePage = () => {
           {!histories &&<TimeKepping 
             setSpinning={setSpinning}
             spinning={spinning}
+            setHistories={setHistories}
+          />}
+
+          {histories && <HistoriesTable 
+            histories={histories}
             setHistories={setHistories}
           />}
         </div>

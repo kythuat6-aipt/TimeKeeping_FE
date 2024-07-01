@@ -32,7 +32,7 @@ const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
     try {
       const { data, status } = await actionTimeKeeping(values);
       if (status === 200) {
-        setHistories(data);
+        setHistories(data?.timekeepings);
       }
     } catch (error) {
       console.log(error);
@@ -64,9 +64,9 @@ const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
           />
         </Form.Item>
         
-        <Form.Item name={"time-keeping"}>
+        {/* <Form.Item name={"time-keeping"}>
           <DatePicker showTime />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item name={"type-keeping"}>
           <Checkbox 
