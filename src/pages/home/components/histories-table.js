@@ -24,10 +24,19 @@ const HistoriesTable = ({ histories, setHistories}) => {
               render: (v, r, i) => dayjs(v).format(DATETIME_FORMAT)
             },
             {
+              title: "PVR (Phút)",
+              dataIndex: "freetime",
+              key: "freetime",
+              align: "center",
+            },
+            {
               title: "Kiểu chấm công",
               dataIndex: "type_keeping",
               key: "type_keeping",
-              render: (v, r, i) => TYPE_KEEPING[v]
+              render: (v,r) => {
+                if( v == 2 && (r?.freetime == 0||r?.freetime == null) ) return " "
+                else return TYPE_KEEPING[v]
+                },
             },
           ]}
         />
