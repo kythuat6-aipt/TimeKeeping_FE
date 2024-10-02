@@ -1,11 +1,8 @@
 // imports page
 import HomePage from "./home";
 import LoginPage from "./login";
-import {
-  UsergroupAddOutlined,
-  FolderOutlined,
-  IssuesCloseOutlined,
-} from "@ant-design/icons";
+
+import { IssuesCloseOutlined } from "@ant-design/icons";
 
 /** pages
  * page hiển thị trên menu thi có thêm 2 thuộc tính icon và label

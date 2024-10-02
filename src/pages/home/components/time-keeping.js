@@ -1,15 +1,16 @@
 import { TYPE_KEEPING } from "utils/constants/config";
 import { actionTimeKeeping, actionGetHistories } from "../actions";
+import { useState } from "react";
 import { AiptLogo } from "assets";
 
 import {
-  Button, Radio, Row, Col,
-  Input, Spin, Form, DatePicker,
-  Checkbox
+  Button, Row, Col, Input,
+  Spin, Form, Checkbox
 } from "antd";
 
-const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
+const TimeKepping = ({ setSpinning, spinning, setHistories }) => {
   const [form] = Form.useForm();
+  const [typeKeeping, setTypeKeeping] = useState();
 
   const handleGetHistories = async () => {
     setSpinning(true);
@@ -30,7 +31,12 @@ const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
     setSpinning(true);
 
     try {
-      const { data, status } = await actionTimeKeeping(values);
+      const req_data = { 
+        ...values, 
+        type_keeping: typeKeeping 
+      };
+      
+      const { data, status } = await actionTimeKeeping(req_data);
       if (status === 200) {
         setHistories(data?.timekeepings);
       }
@@ -40,6 +46,13 @@ const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
 
     setSpinning(false);
   }
+
+  const checkboxOptions = Object.keys(TYPE_KEEPING)
+    .filter(key => !["1", "2"].includes(key))
+    .map(key => ({
+      label: TYPE_KEEPING[key],
+      value: parseInt(key)
+    }))
 
   return (
     <Spin spinning={spinning}>
@@ -63,20 +76,20 @@ const TimeKepping = ({ setSpinning, spinning, setHistories}) => {
             }}
           />
         </Form.Item>
-        
-        {/* <Form.Item name={"time-keeping"}>
-          <DatePicker showTime />
-        </Form.Item> */}
 
-        <Form.Item name={"type-keeping"}>
-          <Checkbox 
-            onChange={(e) => {
-              const value = e.target.checked ? Object.keys(TYPE_KEEPING)[0] : undefined;
-              form.setFieldValue("type-keeping", value);
-            }}
-          >
-            {Object.values(TYPE_KEEPING)[0]}
-          </Checkbox>
+        <Form.Item>
+          {checkboxOptions.map(checkbox => (
+            <Checkbox 
+              key={checkbox.value} 
+              value={checkbox.value}
+              checked={typeKeeping == checkbox.value}
+              onChange={(e) => 
+                e.target.checked ? setTypeKeeping(e.target.value) : setTypeKeeping(null)
+              }
+            >
+              {checkbox.label}
+            </Checkbox>
+          ))}
         </Form.Item>
 
         <Form.Item name={"description"}>

@@ -22,7 +22,7 @@ const App = () => {
   window.navigatePage = (name, params = {}, query = {}) => navigatePage(navigate, name, params, query)
   
   // check is mobile view
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth > 576)
+  const isMobileView = window.innerWidth < 576
   
   // get current page
   const { pathname } = useLocation()
@@ -30,16 +30,6 @@ const App = () => {
   const currentPage = useMemo(() => {
     return findPageByPath(pathname, pages)
   }, [pathname])
-
-  // handle resize
-  const handleResize = () => {
-    setIsMobileView(window.innerWidth > 576)
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
 
   // common
   useEffect(() => {
@@ -56,7 +46,12 @@ const App = () => {
 
   return (
     <Layout id="app">
-      <PageContent userLogin={userLogin} />
+      {/* <PageContent userLogin={userLogin} />  */}
+
+      {isMobileView ? 
+        <PageContent userLogin={userLogin} /> : 
+        <span>Vui lòng đăng nhập trên điện thoại !</span>
+      }
     </Layout>
   )
 }

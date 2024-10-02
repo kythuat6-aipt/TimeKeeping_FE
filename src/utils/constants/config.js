@@ -23,5 +23,6 @@ export const TYPE_KEEPING = {
   0: "Công tác",
   1: "Nghỉ phép",
   2: "Việc riêng",
+  3: "Làm ngày nghỉ"
 };
 

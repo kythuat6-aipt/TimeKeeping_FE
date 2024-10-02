@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <Layout className="common-layout">
       <SpinCustom spinning={spinning}>
-        <div className="common-layout--header"></div>
+        <div className="common-layout--header" />
 
         <div className="common-layout--content">
           {!histories &&<TimeKepping 
