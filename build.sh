@@ -1,7 +1,7 @@
 # get new code
+# git checkout main
+# git pull
 npm i
-git checkout main
-git pull
 
 # build
 NODE_OPTIONS="--max_old_space_size=4096" npm run build
