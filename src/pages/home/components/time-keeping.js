@@ -53,6 +53,7 @@ const TimeKepping = ({ setSpinning, spinning, setHistories }) => {
         ...values, 
         type_keeping: typeKeeping 
       };
+      // console.log(req_data);
       
       const { data, status } = await actionTimeKeeping(req_data);
       if (status === 200) {
@@ -65,12 +66,7 @@ const TimeKepping = ({ setSpinning, spinning, setHistories }) => {
     setSpinning(false);
   }
 
-  const checkboxOptions = Object.keys(TYPE_KEEPING)
-    .filter(key => !["1", "2"].includes(key))
-    .map(key => ({
-      label: TYPE_KEEPING[key],
-      value: parseInt(key)
-    }))
+ 
 
   return (
     <Spin spinning={spinning}>
@@ -103,18 +99,15 @@ const TimeKepping = ({ setSpinning, spinning, setHistories }) => {
         </Form.Item>
 
         <Form.Item>
-          {checkboxOptions.map(checkbox => (
+          
             <Checkbox 
-              key={checkbox.value} 
-              value={checkbox.value}
-              checked={typeKeeping == checkbox.value}
               onChange={(e) => 
-                e.target.checked ? setTypeKeeping(e.target.value) : setTypeKeeping(null)
+                e.target.checked ? setTypeKeeping(0) : setTypeKeeping(null)
               }
             >
-              {checkbox.label}
+              Công tác
             </Checkbox>
-          ))}
+       
         </Form.Item>
 
         <Form.Item name={"description"}>
