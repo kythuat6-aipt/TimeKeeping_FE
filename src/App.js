@@ -46,12 +46,7 @@ const App = () => {
 
   return (
     <Layout id="app">
-      {/* <PageContent userLogin={userLogin} />  */}
-
-      {isMobileView ? 
-        <PageContent userLogin={userLogin} /> : 
-        <span>Vui lòng đăng nhập trên điện thoại !</span>
-      }
+      <PageContent userLogin={userLogin} /> 
     </Layout>
   )
 }
